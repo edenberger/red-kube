@@ -56,16 +56,18 @@ sudo apt-get install -y jq
 
 ## Usage
 ```bash
-usage: python3 main.py [-h] [--mode active/passive/all] [--tactic TACTIC_NAME] [--show_tactics] [--cleanup]
+usage: python3 main.py [-h] [--mode active/passive/all] [--tactic TACTIC_NAME] [--show_tactics] [--cleanup] [--server proto://SERVER:PORT] [--token TOKEN] [--username user:pass]
 
 required arguments:
---mode            run kubectl commands which are active / passive / all modes
---tactic          choose tactic
+--mode		Run kubectl commands which have the mode: active, passive or all
+--tactic	Choose tactic
+--server	Address and port of the remote server: http://IP:8080, https://IP:6443
+--token		Bearer token for authentication
+--username	username:password for basic authentication
 
 other arguments:
--h --help         show this help message and exit
---show_tactics    show all tactics
-
+-h, --help	Show this help message and exit
+--show_tactics	List tactics
 ```
 
 ### Commands by MITRE ATT&CK Tactics

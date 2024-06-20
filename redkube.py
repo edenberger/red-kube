@@ -1,7 +1,8 @@
+#!/usr/bin/env python3
 import json
 import subprocess
-import argparse
 import sys
+import argparse
 from art import text2art
 import termcolor
 from clint.textui import colored, puts, indent
@@ -10,8 +11,11 @@ import time
 mitre_tactics = ["privilege_escalation", "discovery", "command_and_control", "credential_access", "persistence",
                  "collection", "defense_evasion", "execution", "reconnaissance", "lateral_movement", "initial_access"]
 
+kubectl='kubectl --insecure-skip-tls-verify '
 
 def kubectl_subproc(kubectl_command):
+    kubectl_command = kubectl_command.replace("kubectl", kubectl)
+    print(kubectl_command)
     k_proc = subprocess.run(kubectl_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout = k_proc.stdout
     stderr = k_proc.stderr
@@ -126,12 +130,19 @@ def cleanup():
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
+    parser.add_argument('--show_tactics', action='store_true', help='List tactics')
+    parser.add_argument('--tactic', action='store', dest='tactic', type=str,
+                        help='Specify tactic', required=False)
+    parser.add_argument('--cleanup', action='store_true',
+                        help='Delete pods trivy awscli', required=False)
     parser.add_argument('--mode', action='store', dest='mode', type=str,
                         help='scan mode (passive/active/all)', required=False, default='passive')
-    parser.add_argument('--tactic', action='store', dest='tactic', type=str,
-                        help='specific tactic', required=False)
-    parser.add_argument('--show_tactics', action='store_true', help='show tactics')
-    parser.add_argument('--cleanup', action='store_true', required=False)
+    parser.add_argument('--token', action='store',
+                        help='Bearer token for authentication', required=False)
+    parser.add_argument('--username', action='store',
+                        help='username:password for basic authentication', required=False)
+    parser.add_argument('--server', action='store',
+                        help='Address and port of the remote server: http://IP:8080, https://IP:6443', required=False)
 
     cmd_args = parser.parse_args()
     scan_tactic = ''
@@ -139,6 +150,15 @@ if __name__ == "__main__":
 
     if cmd_args.mode:
         scan_mode = cmd_args.mode
+
+    if cmd_args.server:
+        kubectl+=' --server=' + cmd_args.server + ' '
+
+    if cmd_args.token:
+        kubectl+=' --token=' + cmd_args.token + ' '
+
+    if cmd_args.username:
+        kubectl+=' --username=' + cmd_args.username + ' '
 
     if cmd_args.tactic:
         scan_tactic = cmd_args.tactic
