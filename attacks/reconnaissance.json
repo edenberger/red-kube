@@ -8,7 +8,7 @@
     "mode": "active",
     "multistep": false,
     "args": false,
-    "command": "kubectl run -i --tty rk-nmap --image=securecodebox/nmap --restart=Never -- sh -c \"ip -o -f inet addr show | awk '/scope global/ {print $4}' | xargs nmap\"",
+    "command": "kubectl run -i --tty rk-nmap --image=securecodebox/nmap --restart=Never -- sh -c \"ip -o -f inet addr show | awk '/scope global/ {print $4}' | xargs nmap\" ; kubectl delete pod rk-nmap",
     "leading_to": ""
   },
   {
@@ -20,7 +20,7 @@
     "mode": "active",
     "multistep": false,
     "args": false,
-    "command": "kubectl run busybox --image=busybox -- sleep 100 && kubectl exec -i --tty busybox -- uname -r && kubectl delete pod busybox",
+    "command": "kubectl run busybox --image=busybox -- sleep 100 && kubectl exec -i --tty busybox -- uname -r ; kubectl delete pod busybox",
     "leading_to": ""
   }
 ]
