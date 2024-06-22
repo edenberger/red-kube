@@ -4,6 +4,8 @@
 Red Team K8S Adversary Emulation Based on kubectl
 ==============================
 
+* This fork support running the attacks on a remote server and have some attacks fixes
+
 Red Kube is a collection of kubectl commands written to evaluate the security posture of Kubernetes clusters from the attacker's perspective.
 
 The commands are either passive for data collection and information disclosure or active for performing real actions that affect the cluster.
@@ -108,4 +110,4 @@ This research was held by Lightspin's Security Research Team.
 For more information, contact us at support@lightspin.io.
 
 ### License
-This repository is available under the [Apache License 2.0](https://github.com/lightspin-tech/red-kube/blob/main/LICENSE).
+This repository is available under the [Apache License 2.0](https://github.com/edenberger/red-kube/blob/main/LICENSE).
