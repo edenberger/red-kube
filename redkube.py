@@ -15,7 +15,6 @@ kubectl='kubectl --insecure-skip-tls-verify '
 
 def kubectl_subproc(kubectl_command):
     kubectl_command = kubectl_command.replace("kubectl", kubectl)
-    print(kubectl_command)
     k_proc = subprocess.run(kubectl_command, shell=True, stdout=subprocess.PIPE, stderr=subprocess.PIPE)
     stdout = k_proc.stdout
     stderr = k_proc.stderr
